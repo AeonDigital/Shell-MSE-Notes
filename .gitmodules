@@ -1,0 +1,8 @@
+[submodule "Shell-MSE-Main-Module"]
+	path = Shell-MSE-Main-Module
+	url = https://github.com/AeonDigital/Shell-MSE-Main-Module.git
+	branch = main
+[submodule "Shell-MSE-UnitTest"]
+	path = Shell-MSE-UnitTest
+	url = https://github.com/AeonDigital/Shell-MSE-UnitTest.git
+	branch = main
