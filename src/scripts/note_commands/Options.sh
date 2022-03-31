@@ -18,22 +18,32 @@ MSE_NOTES_RAW_COMMAND+=("Options;Show this options;opt;")
 #
 # Executa o comando.
 mse_notes_execCmdOptions() {
+  local mseRawTable="     Command|Name|Description\n"
+
+  local mseCmdName
+  local mseCmdKey
+  local mseCmdDescription
+  local mseCmdTarget
+  for mseCmdName in "${MSE_NOTES_USER_CALLABLE_COMMAND_NAME[@]}"; do
+    mseCmdKey="${MSE_NOTES_USER_CALLABLE_COMMAND_KEY[$mseCmdName]}"
+    mseCmdDescription="${MSE_NOTES_USER_CALLABLE_COMMAND_DESCRIPTION[$mseCmdName]}"
+    mseCmdTarget="${MSE_NOTES_USER_CALLABLE_COMMAND_TARGET[$mseCmdName]}"
+
+    if [ "${mseCmdTarget}" == "l" ]; then
+      mseCmdKey+="#"
+    fi
+
+    mseRawTable+="     :${mseCmdKey}|${mseCmdName}|${mseCmdDescription}\n"
+  done
+
   clear
-  printf "::   ${mseCmdType}\n\n"
-
-  local mseRawTable="Command|Name|Description\n"
-  mseRawTable+=":el@|EditLine|Edit single line defined in @\n"
-  mseRawTable+=":cl@|ClearLine|Remove entire text from line defined in @\n"
-  mseRawTable+=":rl@|RemoveLine|Remove the line defined in @\n"
-  mseRawTable+=":rn@|RewriteNote|Rewrite entire clean note without command lines\n"
-  mseRawTable+=":q  |Quit|Exit from editor\n"
-  mseRawTable+=":o  |Options|Show this options\n"
-
+  mse_notes_printTopHeader
+  printf "     ${mseCmdType}\n\n"
   mseRawTable=$(printf "${mseRawTable}")
   column -e -s "|" -t <<< "${mseRawTable}"
 
   printf "\n"
-  read -n 1 -s -r -p "Press any key to return"
+  read -n 1 -s -r -p "     Press any key to return"
 
-  mse_notes_execCmdRewriteNote
+  mse_notes_execCmdRewriteNote "1"
 }

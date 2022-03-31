@@ -78,7 +78,74 @@ mse_notes_execCmdReadLine() {
     fi
 
     if [ "${mseCmdType}" == "ReadLine" ]; then
-      MSE_NOTES_FILE_CONTENT+=("${mseLine}")
+      #
+      # Processa a quebra de linha caso seja para realizá-la
+      if [ $MSE_NOTES_INTERFACE_BREAKLINE == 1 ] && [ ${#mseLine} -gt ${MSE_NOTES_INTERFACE_RULER_LENGTH} ]; then
+        mse_notes_execCmdReadLine_BreakLine
+      else
+        MSE_NOTES_FILE_CONTENT+=("${mseLine}")
+      fi
+
+      mse_notes_execCmdReadLine_MaxLines
     fi
+  fi
+}
+
+
+
+
+
+#
+# Efetua o processamento da quebra automática de linhas
+mse_notes_execCmdReadLine_BreakLine() {
+  #
+  # Splita a linha em palavras
+  local mseLineWords
+  readarray -d ' ' -t mseLineWords <<< "${mseLine}"
+
+
+  #
+  # Remove o '\n' adicionado ao final da última linha pelo comando 'readarray'
+  local mseLastWordIndex="${#mseLineWords[@]}"
+  ((mseLastWordIndex=mseLastWordIndex-1))
+  mseLineWords[$mseLastWordIndex]=$(printf "${mseLineWords[$mseLastWordIndex]}" | sed 's/^\s*//g' | sed 's/\s*$//g')
+
+
+  local mseAtualWord=""
+  local mseAtualWordLength=0
+  local mseAtualLine=""
+  local mseAtualLineLength=0
+  for mseAtualWord in "${mseLineWords[@]}"; do
+    mseAtualWordLength=${#mseAtualWord}
+    mseAtualLineLength=${#mseAtualLine}
+    ((mseAtualLineLength=mseAtualLineLength+mseAtualWordLength))
+
+    #
+    # se a linha ficar maior que a régua...
+    if [ ${mseAtualLineLength} -gt ${MSE_NOTES_INTERFACE_RULER_LENGTH} ]; then
+      MSE_NOTES_FILE_CONTENT+=("${mseAtualLine}")
+      mseAtualLine=""
+    elif [ ${#mseAtualLine} -gt 0 ]; then
+      mseAtualLine+=" "
+    fi
+
+    mseAtualLine+="${mseAtualWord}"
+  done
+
+  if [ "${mseAtualLine}" != "" ]; then
+    MSE_NOTES_FILE_CONTENT+=("${mseAtualLine}")
+  fi
+
+  mse_notes_execCmdRewriteNote "0"
+}
+
+#
+# Efetua o processamento do controle de linha máxima
+mse_notes_execCmdReadLine_MaxLines() {
+  #
+  # Em caso de exceder o limite de linhas definidos
+  if [ ${#MSE_NOTES_FILE_CONTENT[@]} -gt ${MSE_NOTES_INTERFACE_MAX_LINES} ]; then
+      MSE_NOTES_FILE_CONTENT=("${MSE_NOTES_FILE_CONTENT[@]:0:${MSE_NOTES_INTERFACE_MAX_LINES}}")
+      mse_notes_execCmdRewriteNote "0"
   fi
 }

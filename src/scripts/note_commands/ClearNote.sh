@@ -13,13 +13,13 @@
 #
 # Veja mais informações sobre como preencher esta informação no
 # arquivo /src/config/variables.sh
-MSE_NOTES_RAW_COMMAND+=("RemoveLine;Completely remove the indicated line;rl;l")
+MSE_NOTES_RAW_COMMAND+=("ClearNote;Clear entire note;cn;")
 
 #
-# Executa o comando.
-mse_notes_execCmdRemoveLine() {
-  printf "::   ${mseCmdType} ${mseCmdTargetLine}\n"
+# Executa o comando 'ClearNote'
+mse_notes_execCmdClearNote() {
+  unset MSE_NOTES_FILE_CONTENT
+  declare -ga MSE_NOTES_FILE_CONTENT=()
 
-  unset MSE_NOTES_FILE_CONTENT[$mseCmdTargetIndex]
   mse_notes_execCmdRewriteNote "1"
 }

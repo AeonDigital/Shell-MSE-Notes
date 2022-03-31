@@ -28,5 +28,19 @@ mse_notes_execCmdRewriteNote() {
     printf "%s\n" "${mseLine}"
   done
 
-  ((mseLineCounter=mseLineCounter+1))
+
+  #
+  # Por padrão, quando evocado pelo usuário, exige
+  # um ajuste de +1 para que a contagem das linhas prossiga corretamente.
+  # No entanto, quando evocado em outros pontos, tal correção não é necessária
+  # neste caso, se o parametro $1 for definido e for igual a '0' o ajuste
+  # de linha será ignorado.
+  local mseAdjustLineCounter=1
+  if [ $# == 1 ] && [ $1 == 0 ]; then
+    mseAdjustLineCounter=0
+  fi
+
+  if [ $mseAdjustLineCounter == 1 ]; then
+    ((mseLineCounter=mseLineCounter+1))
+  fi
 }
