@@ -7,4 +7,4 @@
 
 
 
-alias freeNote="mse_notes_freeNote"
+alias shellNote="mse_notes_ShellNote"
