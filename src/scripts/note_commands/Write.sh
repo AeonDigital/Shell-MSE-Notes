@@ -147,6 +147,7 @@ mse_notes_execCmdWrite() {
 
       if [ $? == 0 ]; then
         if [ "${mseCmdType}" == "WriteAndQuit" ]; then
+          mseCmdType="QuitWithoutSave"
           mse_notes_execCmdQuit
         else
           mse_notes_execCmdRefreshNote "1"
