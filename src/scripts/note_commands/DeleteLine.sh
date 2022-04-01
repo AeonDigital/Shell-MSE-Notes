@@ -13,13 +13,13 @@
 #
 # Veja mais informações sobre como preencher esta informação no
 # arquivo /src/config/variables.sh
-MSE_NOTES_RAW_COMMAND+=("RemoveLine;Completely remove the indicated line;rl;l")
+MSE_NOTES_RAW_COMMAND+=("DeleteLine;Completely remove the indicated line;dl;l")
 
 #
 # Executa o comando.
-mse_notes_execCmdRemoveLine() {
+mse_notes_execCmdDeleteLine() {
   printf "::   ${mseCmdType} ${mseCmdTargetLine}\n"
 
   unset MSE_NOTES_FILE_CONTENT[$mseCmdTargetIndex]
-  mse_notes_execCmdRewriteNote "1"
+  mse_notes_execCmdRefreshNote "1"
 }

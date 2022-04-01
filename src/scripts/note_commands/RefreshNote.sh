@@ -13,11 +13,11 @@
 #
 # Veja mais informações sobre como preencher esta informação no
 # arquivo /src/config/variables.sh
-MSE_NOTES_RAW_COMMAND+=("RewriteNote;Rewrite entire clean note without command lines;rn;")
+MSE_NOTES_RAW_COMMAND+=("RefreshNote;Refresh entire note in terminal;rn;")
 
 #
 # Executa o comando.
-mse_notes_execCmdRewriteNote() {
+mse_notes_execCmdRefreshNote() {
   mseLineCounter=0
 
   clear

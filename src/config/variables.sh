@@ -24,12 +24,12 @@ MSE_NOTES_INTERFACE_RULER_LENGTH=80
 #
 # Indica se deve ou não quebrar as linhas cujo texto ultrapassem
 # o tamanho definido para a 'regua'
-MSE_NOTES_INTERFACE_BREAKLINE=0
+MSE_NOTES_INTERFACE_BREAKLINE=1
 
 #
 # Tamanho máximo 'em linhas' que uma nota pode ter.
 # Indique '0' para que não tenha limites
-MSE_NOTES_INTERFACE_MAX_LINES=0
+MSE_NOTES_INTERFACE_MAX_LINES=20
 
 #
 # Armazena as strings indicativas de cada uma das regras

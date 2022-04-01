@@ -45,5 +45,5 @@ mse_notes_execCmdOptions() {
   printf "\n"
   read -n 1 -s -r -p "     Press any key to return"
 
-  mse_notes_execCmdRewriteNote "1"
+  mse_notes_execCmdRefreshNote "1"
 }

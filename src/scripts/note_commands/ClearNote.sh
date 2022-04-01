@@ -21,5 +21,5 @@ mse_notes_execCmdClearNote() {
   unset MSE_NOTES_FILE_CONTENT
   declare -ga MSE_NOTES_FILE_CONTENT=()
 
-  mse_notes_execCmdRewriteNote "1"
+  mse_notes_execCmdRefreshNote "1"
 }

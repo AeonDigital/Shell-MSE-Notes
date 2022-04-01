@@ -14,15 +14,14 @@
 # @param string $1
 # Caminho até um arquivo que deve ser carregado.
 # Se nada for indicado abrirá uma nova nota.
-mse_notes_ShellNote() {
-  unset MSE_NOTES_FILE_CONTENT
-  declare -ga MSE_NOTES_FILE_CONTENT=()
-
-
+mse_notes_shellNote() {
   mse_notes_checkConfig
+
+  local mseTmpFile=""
   if [ $# -gt 0 ]; then
-    mse_notes_checkArgFileName "$1"
+    mseTmpFile="$1"
   fi
+  mse_notes_checkArgFileName "${mseTmpFile}"
 
 
 
@@ -51,7 +50,7 @@ mse_notes_ShellNote() {
     clear
     mse_notes_printTopHeader
   else
-    mse_notes_execCmdRewriteNote "0"
+    mse_notes_execCmdRefreshNote "0"
   fi
 
 
@@ -89,8 +88,6 @@ mse_notes_ShellNote() {
 
   IFS="${mseIFS}"
   mse_notes_printBottomHeader
-
-  printf "%s\n" "${MSE_NOTES_FILE_CONTENT[@]}"
 }
 
 
@@ -150,26 +147,43 @@ mse_notes_checkConfig() {
 # Verifica o argumento 'FileName' ($1).
 # que indica o arquivo alvo da edição sendo feita.
 mse_notes_checkArgFileName() {
+  unset MSE_NOTES_FILE_CONTENT
+  declare -ga MSE_NOTES_FILE_CONTENT=()
+
   #
-  # Identifica se é para abrir um arquivo existente
-  if [ "$1" != "" ]; then
+  # Identifica se é para abrir uma nova nota ou uma existente
+  if [ "$1" == "" ]; then
+    MSE_NOTES_INTERFACE_FILE=""
+  else
     MSE_NOTES_INTERFACE_FILE=$(realpath "$1")
     if [ -f "${MSE_NOTES_INTERFACE_FILE}" ]; then
-      readarray -t MSE_NOTES_FILE_CONTENT < "${MSE_NOTES_INTERFACE_FILE}"
-
-      local mseTotalLines="${#MSE_NOTES_FILE_CONTENT[@]}"
-      if [ "${mseTotalLines}" -gt 0 ]; then
-        #
-        # Remove o '\n' adicionado ao final da última linha pelo comando 'readarray'
-        local mseLastLineIndex="${mseTotalLines}"
-        ((mseLastLineIndex=mseLastLineIndex-1))
-
-        MSE_NOTES_FILE_CONTENT[$mseLastLineIndex]=$(printf "${MSE_NOTES_FILE_CONTENT[$mseLastLineIndex]}" | sed 's/^\s*//g' | sed 's/\s*$//g')
-      fi
+      mse_notes_loadFileContentToArray
+      MSE_NOTES_FILE_CONTENT=("${MSE_TMP_NOTES_FILE_CONTENT[@]}")
     fi
   fi
 }
 
+
+
+#
+# Carrega o arquivo atualmente configurado para um array
+# temporário 'MSE_TMP_NOTES_FILE_CONTENT'.
+mse_notes_loadFileContentToArray() {
+  unset MSE_TMP_NOTES_FILE_CONTENT
+  declare -ga MSE_TMP_NOTES_FILE_CONTENT=()
+
+  readarray -t MSE_TMP_NOTES_FILE_CONTENT < "${MSE_NOTES_INTERFACE_FILE}"
+
+  local mseTotalLines="${#MSE_NOTES_FILE_CONTENT[@]}"
+  if [ "${mseTotalLines}" -gt 0 ]; then
+    #
+    # Remove o '\n' adicionado ao final da última linha pelo comando 'readarray'
+    local mseLastLineIndex="${mseTotalLines}"
+    ((mseLastLineIndex=mseLastLineIndex-1))
+
+    MSE_TMP_NOTES_FILE_CONTENT[$mseLastLineIndex]=$(printf "${MSE_TMP_NOTES_FILE_CONTENT[$mseLastLineIndex]}" | sed 's/^\s*//g' | sed 's/\s*$//g')
+  fi
+}
 
 
 #
@@ -225,7 +239,7 @@ mse_notes_loadCommands() {
 
       unset "mse_notes_execCmd${mseCommandName}"
       . "$msePathToCommand" || true
-    done <<< $(find "${nseTmpPathToCommands}/note_commands" -maxdepth 1 -name '*.sh')
+    done <<< $(find "${nseTmpPathToCommands}/note_commands" -maxdepth 1 -name '*.sh' | sort)
 
 
     #

@@ -136,7 +136,7 @@ mse_notes_execCmdReadLine_BreakLine() {
     MSE_NOTES_FILE_CONTENT+=("${mseAtualLine}")
   fi
 
-  mse_notes_execCmdRewriteNote "0"
+  mse_notes_execCmdRefreshNote "0"
 }
 
 #
@@ -146,6 +146,6 @@ mse_notes_execCmdReadLine_MaxLines() {
   # Em caso de exceder o limite de linhas definidos
   if [ ${#MSE_NOTES_FILE_CONTENT[@]} -gt ${MSE_NOTES_INTERFACE_MAX_LINES} ]; then
       MSE_NOTES_FILE_CONTENT=("${MSE_NOTES_FILE_CONTENT[@]:0:${MSE_NOTES_INTERFACE_MAX_LINES}}")
-      mse_notes_execCmdRewriteNote "0"
+      mse_notes_execCmdRefreshNote "0"
   fi
 }
