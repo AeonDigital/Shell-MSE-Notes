@@ -14,6 +14,10 @@
 # @param string $1
 # Caminho até um arquivo que deve ser carregado.
 # Se nada for indicado abrirá uma nova nota.
+#
+# @param string $2
+# Caminho até um arquivo que possui as instruções para a
+# montagem de um formulário a ser implementado pelo 'shellNote'.
 mse_notes_shellNote() {
   mse_notes_checkConfig
 

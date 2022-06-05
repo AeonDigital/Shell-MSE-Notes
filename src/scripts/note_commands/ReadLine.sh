@@ -19,10 +19,10 @@ MSE_NOTES_RAW_COMMAND+=("ReadLine;Reads a line of text entered by the user;;l")
 # Executa o comando.
 mse_notes_execCmdReadLine() {
   ((mseLineCounter=mseLineCounter+1))
-  mse_notes_printCurrentLineNumber "${mseLineCounter}"
+  local prompt=$(mse_notes_printCurrentLineNumber "${mseLineCounter}")
 
 
-  read -r -e mseLine
+  read -r -p "${prompt}" -e mseLine
   if [ "${mseLine}" != "${mseEndFile}" ]; then
     if [ "${mseLine}" == "" ]; then
       printf "\n"

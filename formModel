@@ -1,0 +1,81 @@
+#!Model
+Nome        : [[NOME]]
+Nascimento  : [[DNASC]] Genero: [[GENERO]]
+Email       : [[EMAIL]]
+
+Endereço    : [[ENDERECO]], [[NUMERO]] [[COMPLEMENTO]]
+Bairro      : [[BAIRRO]] Cidade: [[CIDADE]] Estado: [[UF]]
+
+Empresa     : [[EMPRESA]]
+Salário     : R$ [[SALARIO]]
+Início      : [[DATA_INICIO]]
+Fim         : [[DATA_FIM]]
+Tempo       : [[TEMPO_TOTAL]]
+#!Model
+
+
+
+#!Rules
+[[NOME]]
+Digite seu nome:
+r;Text;80
+
+[[DNASC]]
+Digite sua data de nascimento:
+r;Date;DD/MM/YYYY
+
+[[GENERO]]
+Qual o seu gênero?
+r;List;("F" "M");("Fem" "Mas")
+
+[[EMAIL]]
+Qual o seu email?
+r;Text;60;toLower
+
+[[ENDERECO]]
+Qual o seu endereço (rua)?
+o;Text;80
+
+[[NUMERO]]
+Qual o número da residência?
+o;Int;0;10000
+
+[[COMPLEMENTO]]
+Complemento (sala/apto...):
+o;Text;30;toLower
+
+[[BAIRRO]]
+Bairro:
+o;Text;30
+
+[[CIDADE]]
+Cidade:
+o;Text;60
+
+[[UF]]
+Bairro:
+o;List
+("RS" "SC" "PR")
+("Rio grande do Sul" "Santa Catarina" "Paraná")
+
+[[EMPRESA]]
+Nome da empresa:
+o;Text;50
+
+[[SALARIO]]
+Salário:
+o;Float;0;x;,;.
+
+[[DATA_INICIO]]
+Data de admissão :
+o;Date;DD/MM/YYYY
+
+[[DATA_FIM]]
+Data de demissão:
+o;Date;DD/MM/YYYY
+
+[[TEMPO_TOTAL]]
+Tempo total:
+c;[ "[[DATA_INICIO]]" != "" ] && [ "[[DATA_FIM]]" != "" ]
+Function;("[[DATA_INICIO]]" "[[DATA_FIM]]")
+#!Rules
