@@ -25,7 +25,7 @@ mse_notes_dirOpen() {
     mseFeedBackMsg=$(mse_str_replacePlaceHolder "${lbl_err_paramA_PointsToNonExistentDirectory}" "PARAM_A" "${mseDir}")
     mse_inter_showError "ERR::${mseFeedBackMsg} [${mseDir}]"
   else
-    if [ "$(ls -A ${mseDir} 2> /dev/null)" == "" ]; then
+    if [ "$(ls -A "${mseDir}" 2> /dev/null)" == "" ]; then
       mse_notes_dirInit "${mseDir}"
     fi
 
