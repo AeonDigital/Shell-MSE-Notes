@@ -261,8 +261,9 @@ MSE_GLOBAL_CMD["notes report"]="mse_notes_report"
 # Preenche o array associativo 'MSE_GLOBAL_VALIDATE_PARAMETERS_RULES'
 # com as regras de validação dos parametros aceitáveis.
 mse_notes_report_vldtr() {
-  MSE_GLOBAL_VALIDATE_PARAMETERS_RULES["count"]=3
+  MSE_GLOBAL_VALIDATE_PARAMETERS_RULES["count"]=4
   MSE_GLOBAL_VALIDATE_PARAMETERS_RULES["param_0"]="DateFrom :: o :: string"
   MSE_GLOBAL_VALIDATE_PARAMETERS_RULES["param_1"]="DateTo :: o :: string"
   MSE_GLOBAL_VALIDATE_PARAMETERS_RULES["param_2"]="TopicName :: o :: string"
+  MSE_GLOBAL_VALIDATE_PARAMETERS_RULES["param_3"]="ExportFileName :: o :: string"
 }
