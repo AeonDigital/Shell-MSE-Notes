@@ -1,5 +1,5 @@
 Shell-MSE-Notes
-=================
+================
 
 > [Aeon Digital](http://www.aeondigital.com.br)
 >
@@ -15,6 +15,8 @@ Este projeto depende da instalação prévia do módulo principal [myShellEnv](h
 &nbsp;
 
 
+________________________________________________________________________________________________________________________
+
 ## Instalação
 
 Abra o seu shell, já configurado com o ``myShellEnv`` e use:  
@@ -23,12 +25,12 @@ Abra o seu shell, já configurado com o ``myShellEnv`` e use:
 mse mng submodule install -- "Shell-MSE-Notes"
 ```
 
+
 &nbsp;
 &nbsp;
+
 
 ________________________________________________________________________________________________________________________
-
-
 
 ## Licença
 
